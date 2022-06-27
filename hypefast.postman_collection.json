@@ -1,0 +1,175 @@
+{
+	"info": {
+		"_postman_id": "03ec0764-d29e-45cb-83e9-96a27a8499fb",
+		"name": "hypefast",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19531030"
+	},
+	"item": [
+		{
+			"name": "all-urls",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/url-shortener",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"url-shortener"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "detail-url",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/url-shortener/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"url-shortener",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "fixed1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "redirect",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/url-shortener/redirect?alternate_url=https://tinyurl.com/fixed1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"url-shortener",
+						"redirect"
+					],
+					"query": [
+						{
+							"key": "alternate_url",
+							"value": "https://tinyurl.com/fixed1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "generate-url",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"original_url\": \"https://google.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/url-shortener",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"url-shortener"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "activate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/url-shortener/:id/activate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"url-shortener",
+						":id",
+						"activate"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "fixed1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deactivate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/url-shortener/:id/deactivate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"url-shortener",
+						":id",
+						"deactivate"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "fixed1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
