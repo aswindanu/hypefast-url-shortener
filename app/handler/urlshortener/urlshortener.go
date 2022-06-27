@@ -81,11 +81,7 @@ func RedirectUrl(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 	}
 
 	url.RedirectCount += 1
-	if err := db.Save(&url).Error; err != nil {
-		handler.RespondError(w, http.StatusInternalServerError, err.Error())
-		return
-	}
-
+	db.Save(&url)
 	http.Redirect(w, r, url.OriginalURL, http.StatusMovedPermanently)
 }
 
@@ -98,10 +94,7 @@ func ActivateUrl(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	url.Activate()
-	if err := db.Save(&url).Error; err != nil {
-		handler.RespondError(w, http.StatusInternalServerError, err.Error())
-		return
-	}
+	db.Save(&url)
 	handler.RespondJSON(w, http.StatusOK, url)
 }
 
@@ -114,10 +107,7 @@ func DeactivateUrl(db *gorm.DB, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	url.Deactivate()
-	if err := db.Save(&url).Error; err != nil {
-		handler.RespondError(w, http.StatusInternalServerError, err.Error())
-		return
-	}
+	db.Save(&url)
 	handler.RespondJSON(w, http.StatusNoContent, nil)
 }
 

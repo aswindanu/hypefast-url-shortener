@@ -48,7 +48,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "{{id}}"
+							"value": "fixed1"
 						}
 					]
 				}
@@ -61,7 +61,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/api/v1/url-shortener/redirect?alternate_url=https://tinyurl.com/c967fe",
+					"raw": "http://localhost:3000/api/v1/url-shortener/redirect?alternate_url=https://tinyurl.com/fixed1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -76,7 +76,7 @@
 					"query": [
 						{
 							"key": "alternate_url",
-							"value": "https://tinyurl.com/c967fe"
+							"value": "https://tinyurl.com/fixed1"
 						}
 					]
 				}
@@ -135,7 +135,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "{{id}}"
+							"value": "fixed1"
 						}
 					]
 				}
@@ -164,7 +164,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "{{id}}"
+							"value": "fixed1"
 						}
 					]
 				}
