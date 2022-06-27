@@ -6,14 +6,14 @@ import (
 	"net/http"
 
 	// handler
-	"golang-simple/app/handler/project"
-	"golang-simple/app/handler/task"
+
+	"hypefast-url-shortener/app/handler/urlshortener"
 
 	// model
-	"golang-simple/app/model"
-	
+	"hypefast-url-shortener/app/model"
+
 	// config
-	"golang-simple/config"
+	"hypefast-url-shortener/config"
 
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
@@ -66,23 +66,14 @@ func (a *App) Initialize(config *config.Config) {
 
 // setRouters sets the all required routers
 func (a *App) setRouters() {
-	// Routing for handling the projects
-	a.Get("/projects", a.handleRequest(project.GetAllProjects))
-	a.Post("/projects", a.handleRequest(project.CreateProject))
-	a.Get("/projects/{title}", a.handleRequest(project.GetProject))
-	a.Put("/projects/{title}", a.handleRequest(project.UpdateProject))
-	a.Delete("/projects/{title}", a.handleRequest(project.DeleteProject))
-	a.Put("/projects/{title}/archive", a.handleRequest(project.ArchiveProject))
-	a.Delete("/projects/{title}/archive", a.handleRequest(project.RestoreProject))
-
-	// Routing for handling the tasks
-	a.Get("/projects/{title}/tasks", a.handleRequest(task.GetAllTasks))
-	a.Post("/projects/{title}/tasks", a.handleRequest(task.CreateTask))
-	a.Get("/projects/{title}/tasks/{id:[0-9]+}", a.handleRequest(task.GetTask))
-	a.Put("/projects/{title}/tasks/{id:[0-9]+}", a.handleRequest(task.UpdateTask))
-	a.Delete("/projects/{title}/tasks/{id:[0-9]+}", a.handleRequest(task.DeleteTask))
-	a.Put("/projects/{title}/tasks/{id:[0-9]+}/complete", a.handleRequest(task.CompleteTask))
-	a.Delete("/projects/{title}/tasks/{id:[0-9]+}/complete", a.handleRequest(task.UndoTask))
+	// Routing for handling the urlshortener
+	a.Get("/api/v1/url-shortener", a.handleRequest(urlshortener.GetAllUrls))
+	a.Post("/api/v1/url-shortener", a.handleRequest(urlshortener.CreateUrl))
+	a.Get("/api/v1/url-shortener/redirect", a.handleRequest(urlshortener.RedirectUrl))
+	a.Get("/api/v1/url-shortener/{uid}", a.handleRequest(urlshortener.GetUrl))
+	a.Post("/api/v1/url-shortener/{uid}/activate", a.handleRequest(urlshortener.ActivateUrl))
+	a.Post("/api/v1/url-shortener/{uid}/deactivate", a.handleRequest(urlshortener.DeactivateUrl))
+	// a.Delete("/api/v1/url-shortener/{uid}/deactivate", a.handleRequest(urlshortener.DeactivateProject)) NOTE: User should not delete data (changed to activate/deactivate)
 }
 
 // Get wraps the router for GET method

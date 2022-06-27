@@ -1,48 +1,33 @@
 package model
 
 import (
-	"time"
+	// "time"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 )
 
-type Project struct {
+type Url struct {
 	gorm.Model
-	Title    string `gorm:"unique" json:"title"`
-	Archived bool   `json:"archived"`
-	Tasks    []Task `gorm:"ForeignKey:ProjectID" json:"tasks"`
+	Uid           string `json:"uid" gorm:"unique; type:varchar(25); default:null"`
+	OriginalURL   string `json:"original_url" gorm:"not null; type:varchar(500); default:null"`
+	AlternateURL  string `json:"alternate_url" gorm:"type:varchar(100); default:null"`
+	RedirectCount int    `json:"redirect_count" gorm:"type:int; default:0"`
+	IPOrigin      string `json:"ip_origin" gorm:"type:varchar(20); default:null"`
+	IsActive      bool   `json:"is_active" gorm:"type:bool; default:true"`
 }
 
-func (p *Project) Archive() {
-	p.Archived = true
+func (u *Url) Activate() {
+	u.IsActive = true
 }
 
-func (p *Project) Restore() {
-	p.Archived = false
-}
-
-type Task struct {
-	gorm.Model
-	Title string `json:"title"`
-	// Priority  string     `gorm:"type:ENUM('0', '1', '2', '3');default:'0'" json:"priority"` //FIXME, see this https://stackoverflow.com/a/67743613
-	Deadline  *time.Time `gorm:"default:null" json:"deadline"`
-	Done      bool       `json:"done"`
-	ProjectID uint       `json:"project_id"`
-}
-
-func (t *Task) Complete() {
-	t.Done = true
-}
-
-func (t *Task) Undo() {
-	t.Done = false
+func (u *Url) Deactivate() {
+	u.IsActive = false
 }
 
 // DBMigrate will create and migrate the tables, and then make the some relationships if necessary
 func DBMigrate(db *gorm.DB) *gorm.DB {
-	db.AutoMigrate(&Project{}, &Task{})
-	db.Model(&Task{}).AddForeignKey("project_id", "projects(id)", "CASCADE", "CASCADE")
+	db.AutoMigrate(&Url{})
 	return db
 }

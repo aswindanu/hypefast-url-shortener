@@ -22,7 +22,7 @@ services:
       image: postgres:latest
       restart: unless-stopped
       ports:
-        - 5432
+        - 5454:5432
       volumes:
         - database_data:/var/lib/postgresql/data
       environment:
@@ -44,7 +44,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - .:/golang-simple
+      - .:/hypefast-url-shortener
 
 volumes:
   database_data:

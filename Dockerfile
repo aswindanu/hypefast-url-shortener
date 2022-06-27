@@ -11,4 +11,4 @@ RUN go build
 
 EXPOSE 3000
 
-ENTRYPOINT ["./golang-simple"]
+ENTRYPOINT ["./hypefast-url-shortener"]

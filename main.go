@@ -1,8 +1,8 @@
 package main
 
 import (
-	"golang-simple/app"
-	"golang-simple/config"
+	"hypefast-url-shortener/app"
+	"hypefast-url-shortener/config"
 )
 
 func main() {

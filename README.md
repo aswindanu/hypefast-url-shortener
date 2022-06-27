@@ -1,87 +1,97 @@
-# Go Todo REST API Example
-A RESTful API example for simple todo application with Go
+# URL Shortener
+A RESTful API simple ecommerce
+with Go using **gorilla/mux** (A nice mux library) and **gorm** (An ORM for Go)
 
-It is a just simple tutorial or example for making simple RESTful API with Go using **gorilla/mux** (A nice mux library) and **gorm** (An ORM for Go)
-
-## Installation & Run
-```bash
-# Download this project
-go get github.com/mingrammer/golang-simple
 ```
-
-Before running API server, you should set the database config with yours or set the your database config with my values on [config.go](https://golang-simple/blob/master/config/config.go)
-```go
-func GetConfig() *Config {
-	return &Config{
-		DB: &DBConfig{
-			Dialect:  "mysql",
-			Username: "guest",
-			Password: "Guest0000!",
-			Name:     "todoapp",
-			Charset:  "utf8",
-		},
-	}
-}
-```
-
-```bash
-# Build and Run
-cd golang-simple
-go build
-./golang-simple
-
-# API Endpoint : http://127.0.0.1:3000
+API Endpoint : http://localhost:3000
 ```
 
 ## Structure
 ```
+├── .github
+│   └── workflows
+│       └── main.yml	 		 	 // Github Actions CI (Go test runner)
 ├── app
 │   ├── app.go
-│   ├── handler          // Our API core handlers
-│   │   ├── common.go    // Common response functions
-│   │   ├── projects.go  // APIs for Project model
-│   │   └── tasks.go     // APIs for Task model
+│   ├── handler          		 	 // Our API core handlers
+│   │   ├── urlshortener  		 	 // APIs for urlshortener model
+│   │   └── common.go    		 	 // Common response functions
 │   └── model
-│       └── model.go     // Models for our application
+│       └── model.go	 		 	 // Models for application
 ├── config
-│   └── config.go        // Configuration
+│   └── config.go 	 		 	 // Configuration
 └── main.go
+└── Dockerfile
+└── docker-compose.yml
+└── hypefast.postman_collection.json 	 	 // Postman collection API
 ```
 
-## API
+## How To Run
 
-#### /projects
-* `GET` : Get all projects
-* `POST` : Create a new project
+1. Clone this repo
 
-#### /projects/:title
-* `GET` : Get a project
-* `PUT` : Update a project
-* `DELETE` : Delete a project
+	```
+	git clone https://github.com/aswindanu/hypefast-url-shortener.git
+	```
 
-#### /projects/:title/archive
-* `PUT` : Archive a project
-* `DELETE` : Restore a project 
+2. Go into directory, the build and run docker-compose using this command
 
-#### /projects/:title/tasks
-* `GET` : Get all tasks of a project
-* `POST` : Create a new task in a project
+	```
+	cd hypefast-url-shortener
+	docker-compose up -d --build
+	```
 
-#### /projects/:title/tasks/:id
-* `GET` : Get a task of a project
-* `PUT` : Update a task of a project
-* `DELETE` : Delete a task of a project
+3. API will exposed on this url `http://localhost:3000`, 
 
-#### /projects/:title/tasks/:id/complete
-* `PUT` : Complete a task of a project
-* `DELETE` : Undo a task of a project
+#### Note
+- Database using PostgreSQL, can be access using this credentials 
 
-## Todo
+	```
+	HOST = 127.0.0.1
+	PORT = 5454
+	DATABASE NAME = todoapp
+	USERNAME = root
+	PASSWORD = password
+	```
 
-- [x] Support basic REST APIs.
-- [ ] Support Authentication with user for securing the APIs.
-- [ ] Make convenient wrappers for creating API handlers.
-- [ ] Write the tests for all APIs.
-- [x] Organize the code with packages
-- [ ] Make docs with GoDoc
-- [ ] Building a deployment process 
+- Please test the API for details using Postman collection that can imported from this file `hypefast.postman_collection.json`
+
+- Result of `github actions` can be seen from tab `Action` on github repo itself
+
+## API HIGHLIGHT 
+###### *) please import hypefast.postman_collection.json for more details
+
+#### /api/v1/url-shortener
+* `GET` : Get all urls
+* `POST` : Add new url
+	
+		body: 
+		{
+			"original_url": "<url>"
+		}
+
+#### /api/v1/url-shortener/{uid}
+* `GET` : Get detail url
+
+#### /api/v1/url-shortener/redirect
+* `GET` : Redirect to original_url
+
+		Query params:
+		- alternate_url : <alternate_url>
+
+#### /api/v1/url-shortener/{uid}/activate
+* `POST` : Activate short url
+
+#### /api/v1/url-shortener/{uid}/deactivate
+* `POST` : Deactivate short url
+
+
+### EXPECTED SCENARIO
+
+1. Generate new short url with POST `/api/v1/url-shortener` endpoint
+2. Check details short url with GET `/api/v1/url-shortener/{uid}` endpoint
+3. Redirect short url with GET `/api/v1/url-shortener/redirect` endpoint and query params `alternate_url`
+4. Deactivate url with POST `/api/v1/url-shortener/{uid}/deactivate` endpoint
+5. Try step 2 & 3 again
+6. Re-activate url with POST `/api/v1/url-shortener/{uid}/activate` endpoint
+7. Try step 2 & 3 again
