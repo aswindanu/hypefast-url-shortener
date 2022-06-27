@@ -58,9 +58,9 @@ API Endpoint : http://localhost:3000
 
 - Result of `github actions` can be seen from tab `Action` on github repo itself
 
-- Result of `Testing Manual` (use `go test -count=1 -v -failfast -coverprofile=cover.out ./...`) can be seen on the image below
+- Result of `Testing Manual` (use `go tool cover -html=coverage.out -o coverage.html`) can be seen on the html link below
 
-![Alt text](/Test_Result.png "Test Result")
+	[Open coverage result](/coverage.html "Test Result")
 
 ## API HIGHLIGHT 
 ###### *) please import hypefast.postman_collection.json for more details
